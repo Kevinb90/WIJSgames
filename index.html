@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v4.0" onclick="initialize()">
+				<input type="button" value="Play v4.1" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -465,6 +465,10 @@
 		function initialize (){
 			document.getElementById("InputFrom").style.visibility = "hidden"
 			nickname = document.getElementById("nickname").value
+			if (nickname === ""){
+				nickname = "Unaniem"+date.now()
+			}
+			console.log(nickname)
 			document.addEventListener('click',handleStart)
 			ctx.clearRect(0,0,canvas.width, canvas.height)
 			ctx.font = "12px Georgia";
