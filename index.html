@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v4.6" onclick="initialize()">
+				<input type="button" value="Play v4.7" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -136,6 +136,8 @@
 		background.src = 'Images/Background.jpg'
 		var hazelnoot = new Image()
 		hazelnoot.src = 'Images/hazelnoot.jpg'
+		var eekhoornScore = new Image()
+		eekhoornScore.src = 'Images/EekhoornScore.jpg'
 		
 		const canvas = document.querySelector('canvas')
 		const ctx = canvas.getContext('2d')
@@ -278,6 +280,7 @@
 				ctx.strokeRect(20+(22*i),0.95*w,5,5)
 			}
 			ctx.strokeRect(152+(22*score),0.94*w,5,5)
+			ctx.drawImage(eekhoornScore,152+(22*score),0.94*w,20,20)
 			ctx.fillStyle = 'black'
 		}
 		
