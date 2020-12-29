@@ -46,12 +46,10 @@
 		<div id="titel" style="width: 90%; margin-left: auto ; margin-right: auto;">
 			<h1>Getalbeeld</h1>
 			<hr style="width: 100%"></hr>
-			<button id="playbutton10" type="button" onclick="initialize10()">Play 10!</button>
-			<button id="playbutton20" type="button" onclick="initialize20()">Play 20!</button>
 			<form id="InputFrom">
   				<label for="nickname">nickname:</label>
   				<input id ="nickname" type="text" id="nickname" name="nickname"><br><br>
-				<input type="button" value="Play v6.0" onclick="initialize10()">
+				<input type="button" value="Play v7.0" onclick="initialize()">
 			</form>
 		</div>
 		<div id="canvas_div" style="width: 90%; margin-left: auto ; margin-right: auto; text-align: center;">
@@ -438,10 +436,6 @@
 		
 		function initialize10 (){			
 			setTimeout(function(){
-				document.getElementById("playbutton10").style.visibility = "hidden"
-				document.getElementById("playbutton20").style.visibility = "hidden"
-				document.getElementById("InputFrom").style.visibility = "hidden"
-				nickname = document.getElementById("nickname").value
 				console.log(nickname)
 				maxGetallen = 10
 				score = 0
@@ -450,23 +444,28 @@
 				clicks = 0
 				clicksOk = 0
 				draw ()
-				document.addEventListener('click',handleInput)
 			},300)
 
 		}
 		
 		function initialize20 (){
-			document.getElementById("playbutton10").style.visibility = "hidden"
-			document.getElementById("playbutton20").style.visibility = "hidden"
 			maxGetallen = 20
 			score = 0
 			generate_getallen()
 			time_start = Date.now()
 			clicks = 0
 			clicksOk = 0
-			draw ()
+			draw ()	
+		}	
+		
+		function initialize (){
+			document.getElementById("InputFrom").style.visibility = "hidden"
+			nickname = document.getElementById("nickname").value
 			document.addEventListener('click',handleInput)
-			
+			ctx.font = "50px Georgia";
+			ctx.textAlign = "center"
+			ctx.fillText('Getalbeeld tot 10',w/3,w/3)
+			ctx.fillText('Getalbeeld tot 20',2*w/3,w/3)
 		}		
 
 	
