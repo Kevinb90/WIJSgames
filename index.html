@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v3.2" onclick="initialize()">
+				<input type="button" value="Play v3.3" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -210,8 +210,8 @@
 			canvas.marginRight = "auto"			
 			var size_block = 10
 			
-			ctx.drawImage(background,0,0,w,w)	
-			ctx.drawImage(hazelnoot,0,0,10,10)
+			//OPTIE om achtergrond in te tekenen: ctx.drawImage(background,0,0,w,w)	
+			ctx.drawImage(hazelnoot,0,0,12,12)
 			
 			
 			// teken blokken aantal = getal bovenaan scherm
@@ -227,18 +227,22 @@
 				//tekenen lijnen
 					if(blokken_l1>0){
 						for(let i = 1; i <= blokken_l1; i++){	
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),20,12,12)
 						ctx.fillRect(20+((i-1)*(size_block+10)),20,size_block,size_block)}
 					}
 					if(blokken_l2>0){
 						for(let i = 1; i <= blokken_l2; i++){
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),40,12,12)
 						ctx.fillRect(20+((i-1)*(size_block+10)),40,size_block,size_block)}
 					}
 					if(blokken_l3>0){
-						for(let i = 1; i <= blokken_l3; i++){					
+						for(let i = 1; i <= blokken_l3; i++){	
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),70,12,12)	
 						ctx.fillRect(20+((i-1)*(size_block+10)),70,size_block,size_block)}
 					}
 					if(blokken_l4>0){
 						for(let i = 1; i <= blokken_l4; i++){
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),90,12,12)		
 						ctx.fillRect(20+((i-1)*(size_block+10)),90,size_block,size_block)}
 					}			
 			// teken cijfers
