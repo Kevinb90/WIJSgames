@@ -354,8 +354,6 @@
 					ctx.fillText('Tijd: '+ time,w/2,200)
 					ctx.fillText('Clicks: '+ clicks,w/2,300)
 					ctx.fillText('Juistheid: '+ (clicksOk/clicks)*100 +'%',w/2,400)
-					document.getElementById("playbutton10").style.visibility = "visible"
-					document.getElementById("playbutton20").style.visibility = "visible"
 					if(maxGetallen == 10){
 						// saving data
 						db.collection('Getalbeeld').add({
