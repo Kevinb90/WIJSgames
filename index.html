@@ -176,9 +176,9 @@
 		function generate_getallen(){
 				
 			
-			getal_1 = new getal(Math.floor(Math.random()*maxGetallen),w/3,w/2)
+			getal_1 = new getal(Math.floor(Math.random()*maxGetallen),w/3,w/4)
 			getal_2 = new getal(Math.floor(Math.random()*maxGetallen),2*w/3,w/2)
-			getal_3 = new getal(Math.floor(Math.random()*maxGetallen),w,w/2)
+			getal_3 = new getal(Math.floor(Math.random()*maxGetallen),w,w/4*3)
 			
 			// Getal kan geen twee keer voorkomen
 			if(getal_1.number === 0){getal_1.number += 1}		
@@ -254,9 +254,9 @@
 			// teken score
 			ctx.font = "12px Georgia";
 			for (let i=1; i <= 15; i++){
-				ctx.strokeRect(30+(20*i),0.95*w,5,5)
+				ctx.strokeRect(20+(25*i),0.95*w,5,5)
 			}
-			ctx.strokeRect(150+(20*score),8.8/10*w,5,5)
+			ctx.strokeRect(170+(25*score),0.90*w,5,5)
 			ctx.fillStyle = 'black'
 		}
 		
@@ -466,9 +466,8 @@
 			document.getElementById("InputFrom").style.visibility = "hidden"
 			nickname = document.getElementById("nickname").value
 			if (nickname === ""){
-				nickname = "Unaniem"+Date.now()
+				nickname = "Unaniem - "+Date.now()
 			}
-			console.log(nickname)
 			document.addEventListener('click',handleStart)
 			ctx.clearRect(0,0,canvas.width, canvas.height)
 			ctx.font = "12px Georgia";
