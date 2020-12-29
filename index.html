@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v3.4" onclick="initialize()">
+				<input type="button" value="Play v3.5" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -129,6 +129,7 @@
 		var clicks;
 		var clicksOk;
 		var nickname;
+		var color = ['#FF2D00','#00FF1F','#0004FF','#FFBD00','#FB00FF']
 			
 		// laden afbeeldingen
 		var background = new Image()
@@ -241,14 +242,14 @@
 						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),90,12,12)}
 					}			
 			// teken cijfers
-			ctx.font = "50px Georgia";
+			ctx.font = "50px Georgia"
 			ctx.textAlign = "center"
+			ctx.fillStyle = color[1].value
 			ctx.fillText(getal_1.number,getal_1.posX,getal_1.posY)
-			ctx.strokeRect(getal_1.posX,getal_1.posY,15,-40)
+			ctx.fillStyle = color[2].value
 			ctx.fillText(getal_2.number,getal_2.posX,getal_2.posY)
-			ctx.strokeRect(getal_2.posX,getal_2.posY,15,-40)
+			ctx.fillStyle = color[3].value
 			ctx.fillText(getal_3.number,getal_3.posX,getal_3.posY)
-			ctx.strokeRect(getal_3.posX,getal_3.posY,15,-40)
 			
 			// teken score
 			ctx.font = "12px Georgia";
