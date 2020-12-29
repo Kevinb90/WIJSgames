@@ -46,11 +46,14 @@
 		<div id="titel" style="width: 90%; margin-left: auto ; margin-right: auto;">
 			<h1>Getalbeeld</h1>
 			<hr style="width: 100%"></hr>
-			<form id="InputFrom">
-  				<label for="nickname">Nickname:</label>
-  				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v5.0" onclick="initialize()">
-			</form>
+			<table style="width: 90%">
+				<tr>
+				<form id="InputFrom">
+					<td><label for="nickname">Nickname:</label></td>
+  					<td><input id ="nickname" type="text" name="nickname"></td>
+					<td><input type="button" value="Play v5.1" onclick="initialize()"></td>
+				</form>
+				</tr>	
 			
 		</div>
 		<div id="canvas_div" style="width: 90%; margin-left: auto ; margin-right: auto; text-align: center;">
@@ -196,7 +199,7 @@
 				getal_1.posX = 2/6*w
 				getal_1.posY = 4/6*w
 			} else if(start>1/3){
-				getal_1.posX = 3/6*w
+				getal_1.posX = 4/6*w
 				getal_1.posY = 3/6*w
 			} else {
 				getal_1.posX = 1/6*w
@@ -204,13 +207,13 @@
 			}
 
 			if(start>2/3){
-				getal_2.posX = 3/6*w
+				getal_2.posX = 4/6*w
 				getal_2.posY = 3/6*w
 			} else if(start>1/3){
 				getal_2.posX = 2/6*w
 				getal_2.posY = 4/6*w
 			} else {
-				getal_2.posX = 3/6*w
+				getal_2.posX = 4/6*w
 				getal_2.posY = 3/6*w
 			}	
 
@@ -280,7 +283,6 @@
 				ctx.strokeRect(20+(22*i),0.95*w,5,5)
 			}
 			var img_x = w/10
-			ctx.strokeRect(152+(22*score),0.94*w,5,5)
 			ctx.drawImage(eekhoornScore,152+(22*score)-img_x/2,0.94*w-img_x,img_x,img_x)
 			ctx.fillStyle = 'black'
 		}
