@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">nickname:</label>
   				<input id ="nickname" type="text" id="nickname" name="nickname"><br><br>
-				<input type="button" value="Play v2.4" onclick="initialize()">
+				<input type="button" value="Play v2.5" onclick="initialize()">
 			</form>
 		</div>
 		<div id="canvas_div" style="width: 90%; margin-left: auto ; margin-right: auto; text-align: center;">
@@ -359,7 +359,7 @@
 						db.collection('Getalbeeld').add({
 							Clicks: clicks,
 							Juistheid: (clicksOk/clicks)*100,
-							Nickname: 'KevinB10',
+							Nickname: nickname,
 							Tijd: time,
 							Datum: Date.now(),
 							Type: 10,
@@ -378,7 +378,7 @@
 						db.collection('Getalbeeld').add({
 							Clicks: clicks,
 							Juistheid: (clicksOk/clicks)*100,
-							Nickname: 'KevinB20',
+							Nickname: nickname,
 							Tijd: time,
 							Datum: Date.now(),
 							Type: 20,
