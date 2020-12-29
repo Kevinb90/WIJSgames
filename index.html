@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v3.3" onclick="initialize()">
+				<input type="button" value="Play v3.4" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -227,23 +227,19 @@
 				//tekenen lijnen
 					if(blokken_l1>0){
 						for(let i = 1; i <= blokken_l1; i++){	
-						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),20,12,12)
-						ctx.fillRect(20+((i-1)*(size_block+10)),20,size_block,size_block)}
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),20,12,12)}
 					}
 					if(blokken_l2>0){
 						for(let i = 1; i <= blokken_l2; i++){
-						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),40,12,12)
-						ctx.fillRect(20+((i-1)*(size_block+10)),40,size_block,size_block)}
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),40,12,12)}
 					}
 					if(blokken_l3>0){
 						for(let i = 1; i <= blokken_l3; i++){	
-						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),70,12,12)	
-						ctx.fillRect(20+((i-1)*(size_block+10)),70,size_block,size_block)}
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),70,12,12)}
 					}
 					if(blokken_l4>0){
 						for(let i = 1; i <= blokken_l4; i++){
-						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),90,12,12)		
-						ctx.fillRect(20+((i-1)*(size_block+10)),90,size_block,size_block)}
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),90,12,12)}
 					}			
 			// teken cijfers
 			ctx.font = "50px Georgia";
