@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">nickname:</label>
   				<input id ="nickname" type="text" id="nickname" name="nickname"><br><br>
-				<input type="button" value="Play v2.2" onclick="initialize()">
+				<input type="button" value="Play v2.3" onclick="initialize()">
 			</form>
 		</div>
 		<div id="canvas_div" style="width: 90%; margin-left: auto ; margin-right: auto; text-align: center;">
@@ -331,7 +331,7 @@
 		
 		function handleInput(event){
 			var rect = canvas.getBoundingClientRect();        
-    		var canvasLeft = rect.left 
+    			var canvasLeft = rect.left 
 			var canvasTop = rect.top
 			var mouseX = event.clientX - canvasLeft
 			var mouseY = event.clientY - canvasTop
@@ -461,13 +461,25 @@
 		function initialize (){
 			document.getElementById("InputFrom").style.visibility = "hidden"
 			nickname = document.getElementById("nickname").value
-			document.addEventListener('click',handleInput)
+			document.addEventListener('click',handleStart)
 			ctx.clearRect(0,0,canvas.width, canvas.height)
-			ctx.font = "25px Georgia";
+			ctx.font = "12px Georgia";
 			ctx.textAlign = "center"
-			ctx.fillText('Getalbeeld tot 10',w/3,w/3)
-			ctx.fillText('Getalbeeld tot 20',2*w/3,w/3)
-		}		
+			ctx.fillText('Getalbeeld tot 10',w/4,w/3)
+			ctx.fillText('Getalbeeld tot 20',3*w/4,w/3)
+		}	
+		function handleStart (){
+			var rect = canvas.getBoundingClientRect();        
+    			var canvasLeft = rect.left 
+			var canvasTop = rect.top
+			var mouseX = event.clientX - canvasLeft
+			var mouseY = event.clientY - canvasTop	
+			
+			if(mouseX >= 0 && mouseX <= w/2 && mouseY >= 0 && mouseY <= (w/3+100)){
+				initialize10 ()
+			} else if (mouseX >= w/2 && mouseX <= w && mouseY >= 0 && mouseY <= (w/3+100)){
+				initialize20 ()
+			}
 
 	
 	</script>
