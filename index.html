@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v4.9" onclick="initialize()">
+				<input type="button" value="Play v5.0" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -279,7 +279,7 @@
 			for (let i=1; i <= 15; i++){
 				ctx.strokeRect(20+(22*i),0.95*w,5,5)
 			}
-			var img_x = 40
+			var img_x = w/10
 			ctx.strokeRect(152+(22*score),0.94*w,5,5)
 			ctx.drawImage(eekhoornScore,152+(22*score)-img_x/2,0.94*w-img_x,img_x,img_x)
 			ctx.fillStyle = 'black'
