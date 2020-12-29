@@ -41,6 +41,9 @@
 		th{
 			border: 1px solid black;
 		}
+		table{
+			border: 1px solid black;
+		}
 	</style>
 	<div id="total" style="margin-left: auto ; margin-right: auto; max-width: 600px;">
 		<div id="titel" style="width: 90%; margin-left: auto ; margin-right: auto;">
@@ -51,7 +54,7 @@
 				<form id="InputFrom">
 					<td><label for="nickname">Nickname:</label></td>
   					<td><input id ="nickname" type="text" name="nickname"></td>
-					<td><input type="button" value="Play v5.2" onclick="initialize()"></td>
+					<td><input type="button" value="Play v5.3" onclick="initialize()"></td>
 				</form>
 				</tr>	
 			</table>
@@ -199,7 +202,7 @@
 				getal_1.posX = 2/6*w
 				getal_1.posY = 4/6*w
 			} else if(start>1/3){
-				getal_1.posX = 4/6*w
+				getal_1.posX = 4/6*0.98*w
 				getal_1.posY = 3/6*w
 			} else {
 				getal_1.posX = 1/6*w
@@ -207,13 +210,13 @@
 			}
 
 			if(start>2/3){
-				getal_2.posX = 4/6*w
+				getal_2.posX = 4/6*0.98*w
 				getal_2.posY = 3/6*w
 			} else if(start>1/3){
 				getal_2.posX = 2/6*w
 				getal_2.posY = 4/6*w
 			} else {
-				getal_2.posX = 4/6*w
+				getal_2.posX = 4/6*0.98*w
 				getal_2.posY = 3/6*w
 			}	
 
