@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v4.1" onclick="initialize()">
+				<input type="button" value="Play v4.2" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -466,7 +466,7 @@
 			document.getElementById("InputFrom").style.visibility = "hidden"
 			nickname = document.getElementById("nickname").value
 			if (nickname === ""){
-				nickname = "Unaniem"+date.now()
+				nickname = "Unaniem"+Date.now()
 			}
 			console.log(nickname)
 			document.addEventListener('click',handleStart)
