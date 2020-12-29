@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">nickname:</label>
   				<input id ="nickname" type="text" id="nickname" name="nickname"><br><br>
-				<input type="button" value="Play v2.3" onclick="initialize()">
+				<input type="button" value="Play v2.4" onclick="initialize()">
 			</form>
 		</div>
 		<div id="canvas_div" style="width: 90%; margin-left: auto ; margin-right: auto; text-align: center;">
@@ -436,6 +436,7 @@
 		
 		function initialize10 (){			
 			setTimeout(function(){
+				document.removeEventListener('click',handleStart)
 				console.log(nickname)
 				maxGetallen = 10
 				score = 0
@@ -444,11 +445,13 @@
 				clicks = 0
 				clicksOk = 0
 				draw ()
+				document.addEventListener('click',handleInput)
 			},300)
 
 		}
 		
 		function initialize20 (){
+			document.removeEventListener('click',handleStart)
 			maxGetallen = 20
 			score = 0
 			generate_getallen()
@@ -456,6 +459,7 @@
 			clicks = 0
 			clicksOk = 0
 			draw ()	
+			document.addEventListener('click',handleInput)
 		}	
 		
 		function initialize (){
