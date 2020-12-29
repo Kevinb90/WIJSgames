@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v3.9" onclick="initialize()">
+				<input type="button" value="Play v4.0" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -244,22 +244,20 @@
 			// teken cijfers
 			ctx.font = "50px Georgia"
 			ctx.textAlign = "center"
-			ctx.fillStyle = "red"
+			ctx.fillStyle = color[Math.floor(Math.random()*5)]
 			ctx.fillText(getal_1.number,getal_1.posX,getal_1.posY)
-			ctx.fillStyle = "blue"
+			ctx.fillStyle = color[Math.floor(Math.random()*5)]
 			ctx.fillText(getal_2.number,getal_2.posX,getal_2.posY)
-			ctx.fillStyle = color[3]
-			console.log(color[3])
+			ctx.fillStyle = color[Math.floor(Math.random()*5)]
 			ctx.fillText(getal_3.number,getal_3.posX,getal_3.posY)
 			
 			// teken score
 			ctx.font = "12px Georgia";
-			ctx.fillText('score: '+score,30,9/10*w)
 			for (let i=1; i <= 15; i++){
-				console.log('teken score')
-				ctx.strokeRect(30+(20*i),9/10*w,5,5)
+				ctx.strokeRect(30+(20*i),0.95*w,5,5)
 			}
 			ctx.strokeRect(150+(20*score),8.8/10*w,5,5)
+			ctx.fillStyle = 'black'
 		}
 		
 		function calcTime() {
