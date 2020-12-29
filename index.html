@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v3.0" onclick="initialize()">
+				<input type="button" value="Play v3.1" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -485,6 +485,15 @@
 			} else if (mouseX >= w/2 && mouseX <= w && mouseY >= 0 && mouseY <= (w/3+100)){
 				initialize20 ()
 			}
+		}
+		
+		function handleRestart (){
+			if (maxGetallen == 10){
+				initialize10()
+			} else {
+				initialize20()
+			}
+		
 		}
 
 	
