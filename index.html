@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Getalbeeld2</title>
+<title>Getalbeeld</title>
 <!-- The core Firebase JS SDK is always required and must be listed first -->
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
@@ -49,7 +49,7 @@
 			<form id="InputFrom">
   				<label for="nickname">Nickname:</label>
   				<input id ="nickname" type="text" name="nickname">
-				<input type="button" value="Play v4.5" onclick="initialize()">
+				<input type="button" value="Play v4.6" onclick="initialize()">
 			</form>
 			
 		</div>
@@ -192,7 +192,7 @@
 			var start = Math.random()
 			if(start>2/3){
 				getal_1.posX = 2/6*w
-				getal_1.posY = 3/4*w
+				getal_1.posY = 4/6*w
 			} else if(start>1/3){
 				getal_1.posX = 3/6*w
 				getal_1.posY = 3/6*w
@@ -206,7 +206,7 @@
 				getal_2.posY = 3/6*w
 			} else if(start>1/3){
 				getal_2.posX = 2/6*w
-				getal_2.posY = 3/4*w
+				getal_2.posY = 4/6*w
 			} else {
 				getal_2.posX = 3/6*w
 				getal_2.posY = 3/6*w
@@ -220,7 +220,7 @@
 				getal_3.posY = 2/6*w
 			} else {
 				getal_3.posX = 2/6*w
-				getal_3.posY = 3/4*w
+				getal_3.posY = 4/6*w
 			}					
 
 		}	
@@ -275,9 +275,9 @@
 			// teken score
 			ctx.font = "12px Georgia";
 			for (let i=1; i <= 15; i++){
-				ctx.strokeRect(20+(25*i),0.95*w,5,5)
+				ctx.strokeRect(20+(22*i),0.95*w,5,5)
 			}
-			ctx.strokeRect(170+(25*score),0.90*w,5,5)
+			ctx.strokeRect(152+(22*score),0.94*w,5,5)
 			ctx.fillStyle = 'black'
 		}
 		
