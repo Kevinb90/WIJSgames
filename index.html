@@ -47,10 +47,11 @@
 			<h1>Getalbeeld</h1>
 			<hr style="width: 100%"></hr>
 			<form id="InputFrom">
-  				<label for="nickname">nickname:</label>
-  				<input id ="nickname" type="text" id="nickname" name="nickname"><br><br>
-				<input type="button" value="Play v2.5" onclick="initialize()">
+  				<label for="nickname">Nickname:</label>
+  				<input id ="nickname" type="text" name="nickname">
+				<input type="button" value="Play v3.0" onclick="initialize()">
 			</form>
+			
 		</div>
 		<div id="canvas_div" style="width: 90%; margin-left: auto ; margin-right: auto; text-align: center;">
 			<canvas></canvas>
@@ -350,10 +351,11 @@
 					console.log(time)
 					ctx.clearRect(0,0,canvas.width, canvas.height)
 					ctx.textAlign = "center"
-					ctx.fillText('Proficiat, je hebt gewonnen!!!',w/2,100)
-					ctx.fillText('Tijd: '+ time,w/2,200)
-					ctx.fillText('Clicks: '+ clicks,w/2,300)
-					ctx.fillText('Juistheid: '+ (clicksOk/clicks)*100 +'%',w/2,400)
+					ctx.fillText('Proficiat, je hebt gewonnen!!!',w/2,w/3)
+					ctx.fillText('Jouw score: '+ time,w/2,(w/3+25))
+					ctx.fillText('Klik om opnieuw te spelen', w/2, (w/3+75))
+					document.removeEventListener('click',handleInput)
+					document.addEventListener('click',handleRestart)
 					if(maxGetallen == 10){
 						// saving data
 						db.collection('Getalbeeld').add({
@@ -406,10 +408,10 @@
 				} else {
 					ctx.clearRect(0,0,canvas.width, canvas.height)
 					ctx.textAlign = "center"
-					ctx.fillText('Helaas, je hebt verloren.',w/2,w/2)
-					document.getElementById("playbutton10").style.visibility = "visible"
-					document.getElementById("playbutton20").style.visibility = "visible"
-					
+					ctx.fillText('Helaas, je hebt verloren.',w/2,w/3)
+					ctx.fillText('Klik om opnieuw te spelen', w/2, (w/3+75))
+					document.removeEventListener('click',handleInput)
+					document.addEventListener('click',handleRestart)
 				}
 			
 			}else if(mouseX >= getal_3.posX-15 && mouseX <= getal_3.posX+15 && mouseY >= getal_3.posY-40 && mouseY <= getal_3.posY+40){
@@ -421,9 +423,10 @@
 				} else {
 					ctx.clearRect(0,0,canvas.width, canvas.height)
 					ctx.textAlign = "center"
-					ctx.fillText('Helaas, je hebt verloren.',w/2,w/2)
-					document.getElementById("playbutton10").style.visibility = "visible"
-					document.getElementById("playbutton20").style.visibility = "visible"
+					ctx.fillText('Helaas, je hebt verloren.',w/2,w/3)
+					ctx.fillText('Klik om opnieuw te spelen', w/2, (w/3+75))
+					document.removeEventListener('click',handleInput)
+					document.addEventListener('click',handleRestart)
 				}
 			
 			}
