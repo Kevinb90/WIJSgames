@@ -1,0 +1,568 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Getalbeeld</title>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-analytics.js"></script>
+</head>
+
+<body>
+	<style>
+		canvas{
+			border: 1px solid black;
+			
+		}
+		h1{
+			font-size: 35px;
+		}
+		ul{
+				list-style-type: none;
+				padding: 0;
+			}
+
+		li{
+			padding: 20px;
+			background: #f6f6f6;
+			font-size: 20px;
+			color: #555;
+			position: relative;
+			border-bottom: 1px solid #e6e6e6;
+			height: 46px;
+		}
+		div{
+			border: 1px solid black;
+		}
+		th{
+			border: 1px solid black;
+		}
+		table{
+			border: 1px solid black;
+		}
+		.play:hover {
+		  cursor: pointer;
+		}
+
+
+	</style>
+	<div id="mainDiv" style="margin-left: auto ; margin-right: auto;">
+		<div id="titel" style="margin-left: auto ; margin-right: auto;">
+			<h1 style="text-align: center">Getalbeeld</h1>
+			<hr style="width: 100%"></hr>
+			<table style="margin-left: auto; margin-right:auto;" id="InputTable">
+				<tr>
+				<form id="InputFrom">
+					<td><label for="nickname">Nickname:</label></td>
+  					<td><input id ="nickname" type="text" name="nickname"></td>
+					<td style="text-align: right;"><img src='Images/play.jpg' class="play" onClick="initialize ()" width="50%"></td>
+				</form>
+				</tr>	
+			</table>
+			<br>
+		</div>
+		<div id="canvas_div" style=" margin-left: auto ; margin-right: auto; text-align: center;">
+			<canvas></canvas>
+			<br><br>
+			<h2 style="text-align: center;">Topscores (getalbeeld 10)</h2>
+			<table style="width: 90%; margin-left: auto; margin-right:auto; text-align: left;" id="topscore10">
+				<tr>
+					<th>Nickname</th>
+					<th>Score</th>
+				</tr>
+			</table>
+			<br><br>
+			<h2 style="text-align: center;">Topscores (getalbeeld 20)</h2>
+			<table style="width: 90%; margin-left: auto; margin-right:auto; text-align: left;" id="topscore20">
+				<tr>
+					<th>Nickname</th>
+					<th>Score</th>
+				<tr>	
+			</table>			
+		</div>	
+	</div>
+	
+	<script defer>
+		// Your web app's Firebase configuration
+		// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+		var firebaseConfig = {
+			apiKey: "AIzaSyBEPt5kbBjCHP9DA2js0xUpyOA1WL41WAM",
+			authDomain: "wijs-games.firebaseapp.com",
+			databaseURL: "https://wijs-games-default-rtdb.europe-west1.firebasedatabase.app",
+			projectId: "wijs-games",
+			storageBucket: "wijs-games.appspot.com",
+			messagingSenderId: "970847603683",
+			appId: "1:970847603683:web:245a8ee1b28e28f7efeed6",
+			measurementId: "G-03XLP62Y0Z"
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+		firebase.analytics();
+		const db = firebase.firestore();
+		db.settings({ timestampsInSnapshots: true });
+		
+	</script>
+	
+	<script>
+		var windowWidth = window.innerWidth
+		document.getElementById("mainDiv").style.width = windowWidth/2+'px';
+		console.log(windowWidth)
+		
+		
+		class getal{
+			constructor(number,posX,posY){
+				this.number = number
+				this.posX = posX
+				this.posY = posY
+			}
+		}
+		
+		const Topscore10 = document.querySelector('#topscore10')
+		db.collection('Getalbeeld').where('Type','==',10).orderBy('Tijd','desc').limit(5).get().then(snapshot => {
+			snapshot.docs.forEach(doc => {
+			renderScore10(doc)
+			});
+		});	
+		
+		const Topscore20 = document.querySelector('#topscore20')
+		db.collection('Getalbeeld').where('Type','==',20).orderBy('Tijd','desc').limit(5).get().then(snapshot => {
+			snapshot.docs.forEach(doc => {
+			renderScore20(doc)
+			});
+		});			
+		
+		var maxGetallen;
+		var getal_1;
+		var getal_2;
+		var getal_3;
+		var score = 0;
+		var time_start; 
+		var time_end;
+		var time;
+		var clicks;
+		var clicksOk;
+		var nickname;
+		var color = ['red','blue','green','orange','purple']
+			
+		// laden afbeeldingen
+		var background = new Image()
+		background.src = 'Images/Background.jpg'
+		var hazelnoot = new Image()
+		hazelnoot.src = 'Images/Eikel.png'
+		var eekhoornScore = new Image()
+		eekhoornScore.src = 'Images/EekhoornScore.png'
+		var cover = new Image()
+		cover.src = 'Images/cover.jpg'
+		var cover2 = new Image()
+		cover2.src = 'Images/cover2.jpg'		
+		
+		const canvas = document.querySelector('canvas')
+		const ctx = canvas.getContext('2d')
+		var w2 = window.innerWidth;
+		var w = 500		
+		var h = 500
+	
+		console.log(w2)
+		
+		var score = 0
+		
+		//tekenen canvas met algemene spelregels
+		canvas.width = w
+		canvas.height = w
+		canvas.marginLeft = "auto"
+		canvas.marginRight = "auto"
+		
+		NewImage()
+
+		function GetData (){
+		// getting data
+			db.collection('Getalbeeld').get().then(snapshot => {
+    			snapshot.docs.forEach(doc => {
+				console.log(doc.data());
+				console.log('db collection');
+				console.log('db collection test');
+    			});
+			});	
+		}
+		
+		function NewImage(){
+			var img = new Image()
+			img.src = 'Images/cover.jpg'			
+			setTimeout(function(){
+				ctx.drawImage(img,0,0,w,w)
+			},300)
+		}
+
+		function generate_getallen(){
+				
+			
+			getal_1 = new getal(Math.floor(Math.random()*maxGetallen),w/3,w/2*1.15)
+			getal_2 = new getal(Math.floor(Math.random()*maxGetallen),w/3,w/2*1.15)
+			getal_3 = new getal(Math.floor(Math.random()*maxGetallen),w/3,w/2*1.15)
+			
+			// Getal kan geen twee keer voorkomen
+			if(getal_1.number === 0){getal_1.number += 1}		
+			if(getal_2.number === 0){getal_2.number += 1}
+			if(getal_3.number === 0){getal_3.number += 1}
+			if(getal_2.number === getal_1.number){getal_2.number += 1}
+			if(getal_3.number === getal_1.number){getal_3.number += 1}
+			
+			
+			// start positie getallen bepalen
+			var start = Math.random()
+			if(start>2/3){
+				getal_1.posX = 1/8*w
+			} else if(start>1/3){
+				getal_1.posX = 4/8*w
+			} else {
+				getal_1.posX = 7/8*w
+			}
+
+			if(start>2/3){
+				getal_2.posX = 7/8*w
+			} else if(start>1/3){
+				getal_2.posX = 7/8*w
+			} else {
+				getal_2.posX = 1/8*w
+			}	
+
+			if(start>2/3){
+				getal_3.posX = 4/8*w
+			} else if(start>1/3){
+				getal_3.posX = 1/8*w
+			} else {
+				getal_3.posX = 4/8*w
+			}					
+
+		}	
+		
+		function draw () {
+			canvas.width = w
+			canvas.height = w
+			canvas.marginLeft = "auto"
+			canvas.marginRight = "auto"			
+			var size_block = 20
+			
+			ctx.drawImage(background,0,0,w,w)	
+			
+			
+			// teken blokken aantal = getal bovenaan scherm
+				// Bepalen hoeveel rijen
+					var blokken_l1 = Math.min(getal_1.number,5)
+					var blokken_l2 = Math.min(getal_1.number-5,5)
+					var blokken_l3 = Math.min(getal_1.number-10,5)
+					var blokken_l4 = Math.min(getal_1.number-15,5)
+					console.log(blokken_l1)
+					console.log(blokken_l2)
+					console.log(blokken_l3)
+					console.log(blokken_l4)
+				//tekenen lijnen
+					if(blokken_l1>0){
+						for(let i = 1; i <= blokken_l1; i++){	
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),20,size_block,size_block)}
+					}
+					if(blokken_l2>0){
+						for(let i = 1; i <= blokken_l2; i++){
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),20+1.5*size_block,size_block,size_block)}
+					}
+					if(blokken_l3>0){
+						for(let i = 1; i <= blokken_l3; i++){	
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),20+4*size_block,size_block,size_block)}
+					}
+					if(blokken_l4>0){
+						for(let i = 1; i <= blokken_l4; i++){
+						ctx.drawImage(hazelnoot,20+((i-1)*(size_block+10)),20+5.5*size_block,size_block,size_block)}
+					}		
+			// teken cijfers
+			ctx.font = "50px Georgia"
+			ctx.textAlign = "center"
+			ctx.fillStyle = color[Math.floor(Math.random()*5)]
+			ctx.fillText(getal_1.number,getal_1.posX,getal_1.posY)
+			ctx.fillStyle = color[Math.floor(Math.random()*5)]
+			ctx.fillText(getal_2.number,getal_2.posX,getal_2.posY)
+			ctx.fillStyle = color[Math.floor(Math.random()*5)]
+			ctx.fillText(getal_3.number,getal_3.posX,getal_3.posY)
+			
+			// teken score
+			ctx.font = "12px Georgia";
+			for (let i=1; i <= 15; i++){
+				ctx.strokeRect(20+(22*i),0.95*w,5,5)
+			}
+			var img_x = w/5
+			ctx.drawImage(eekhoornScore,152+(22*score)-img_x/2,0.94*w-img_x,img_x,img_x)
+			ctx.fillStyle = 'black'
+		}
+		
+		function calcTime() {
+			time = time_end - time_start
+			
+		}
+		
+		function renderHeader10(){
+			let tr = document.createElement('tr');
+			let nicknameH = document.createElement('th');
+			let scoreH = document.createElement('th');
+
+			nicknameH.textContent = 'nickname';
+			scoreH.textContent = 'score';
+			
+			tr.appendChild(nicknameH);
+			tr.appendChild(scoreH);
+
+			Topscore10.appendChild(tr);
+			
+		}
+		function renderHeader20(){
+			let tr = document.createElement('tr');
+			let nicknameH = document.createElement('th');
+			let scoreH = document.createElement('th');
+
+			nicknameH.textContent = 'nickname';
+			scoreH.textContent = 'score';
+			
+			tr.appendChild(nicknameH);
+			tr.appendChild(scoreH);
+
+			Topscore20.appendChild(tr);
+			
+		}		
+		
+		
+		function renderScore10(doc){
+			let tr2 = document.createElement('tr');
+			let nickname = document.createElement('td');
+			let score = document.createElement('td');
+
+			nickname.textContent = doc.data().Nickname;
+			score.textContent = doc.data().Tijd;
+			
+			tr2.appendChild(nickname);
+			tr2.appendChild(score);
+
+			Topscore10.appendChild(tr2);			
+		}
+		
+		function renderScore20(doc){
+			let tr = document.createElement('tr');
+			let nickname = document.createElement('td');
+			let score = document.createElement('td');
+			let juistheid = document.createElement('td');
+			let tijd = document.createElement('td');
+
+			tr.setAttribute('data-id', doc.id);
+			nickname.textContent = doc.data().Nickname;
+			score.textContent = doc.data().Tijd;
+			juistheid.textContent = doc.data().Juistheid;
+			tijd.textContent = doc.data().Tijd;
+
+			tr.appendChild(nickname);
+			tr.appendChild(score);
+
+			Topscore20.appendChild(tr);
+		}			
+		
+		
+		function handleInput(event){
+			var rect = canvas.getBoundingClientRect();        
+    			var canvasLeft = rect.left 
+			var canvasTop = rect.top
+			var mouseX = event.clientX - canvasLeft
+			var mouseY = event.clientY - canvasTop
+			
+			//Winning click
+			if(mouseX >= getal_1.posX-15 && mouseX <= getal_1.posX+15 && mouseY >= getal_1.posY-40 && mouseY <= getal_1.posY+40){
+				console.log('you won!!!')
+				score += 1
+				clicks += 1
+				clicksOk +=1
+				if(score>=10){
+					time_end = Date.now()
+					calcTime()
+					console.log(time_start)
+					console.log(time_end)
+					console.log(time)
+					ctx.clearRect(0,0,canvas.width, canvas.height)
+					ctx.textAlign = "center"
+					ctx.fillText('Proficiat, je hebt gewonnen!!!',w/2,w/3)
+					ctx.fillText('Jouw score: '+ time,w/2,(w/3+25))
+					ctx.fillText('Klik om opnieuw te spelen', w/2, (w/3+75))
+					document.removeEventListener('click',handleInput)
+					document.addEventListener('click',handleRestart)
+					if(maxGetallen == 10){
+						// saving data
+						db.collection('Getalbeeld').add({
+							Clicks: clicks,
+							Juistheid: (clicksOk/clicks)*100,
+							Nickname: nickname,
+							Tijd: time,
+							Datum: Date.now(),
+							Type: 10,
+						});	
+						Topscore10.innerHTML = "" 
+						renderHeader10()
+						// getting data
+						db.collection('Getalbeeld').where('Type','==',10).orderBy('Tijd','desc').limit(5).get().then(snapshot => {
+							snapshot.docs.forEach(doc => {
+							renderScore10(doc)
+							});
+						});	
+					}
+					if(maxGetallen == 20){
+						// saving data
+						db.collection('Getalbeeld').add({
+							Clicks: clicks,
+							Juistheid: (clicksOk/clicks)*100,
+							Nickname: nickname,
+							Tijd: time,
+							Datum: Date.now(),
+							Type: 20,
+						});	
+						Topscore20.innerHTML = "" 
+						renderHeader20()
+						// getting data
+						db.collection('Getalbeeld').where('Type','==',20).orderBy('Tijd','desc').limit(5).get().then(snapshot => {
+							snapshot.docs.forEach(doc => {
+							renderScore20(doc)
+							});
+						});	
+					}					
+					
+				}else{
+					generate_getallen()
+					draw()
+				}
+			}else if(mouseX >= getal_2.posX-15 && mouseX <= getal_2.posX+15 && mouseY >= getal_2.posY-40 && mouseY <= getal_2.posY+40){
+				score -= 1
+				clicks += 1
+				if(score>-5){
+					console.log('try again >0!!!')
+					draw ()
+				} else {
+					ctx.clearRect(0,0,canvas.width, canvas.height)
+					ctx.textAlign = "center"
+					ctx.fillText('Helaas, je hebt verloren.',w/2,w/3)
+					ctx.fillText('Klik om opnieuw te spelen', w/2, (w/3+75))
+					document.removeEventListener('click',handleInput)
+					document.addEventListener('click',handleRestart)
+				}
+			
+			}else if(mouseX >= getal_3.posX-15 && mouseX <= getal_3.posX+15 && mouseY >= getal_3.posY-40 && mouseY <= getal_3.posY+40){
+				score -= 1
+				clicks += 1
+				if(score>-5){
+					console.log('try again >0!!!')
+					draw()
+				} else {
+					ctx.clearRect(0,0,canvas.width, canvas.height)
+					ctx.textAlign = "center"
+					ctx.fillText('Helaas, je hebt verloren.',w/2,w/3)
+					ctx.fillText('Klik om opnieuw te spelen', w/2, (w/3+75))
+					document.removeEventListener('click',handleInput)
+					document.addEventListener('click',handleRestart)
+				}
+			
+			}
+			
+			
+			
+		}
+		
+		function initialize10 (){			
+			setTimeout(function(){
+				document.removeEventListener('click',handleStart)
+				console.log(nickname)
+				maxGetallen = 10
+				score = 0
+				generate_getallen()
+				time_start = Date.now()
+				clicks = 0
+				clicksOk = 0
+				draw ()
+				document.addEventListener('click',handleInput)
+			},300)
+
+		}
+		
+		function initialize20 (){
+			document.removeEventListener('click',handleStart)
+			maxGetallen = 20
+			score = 0
+			generate_getallen()
+			time_start = Date.now()
+			clicks = 0
+			clicksOk = 0
+			draw ()	
+			document.addEventListener('click',handleInput)
+		}	
+		
+		function initialize (){
+			setTimeout(function(){
+				document.getElementById("InputTable").style.visibility = "hidden"
+				nickname = document.getElementById("nickname").value
+				if (nickname === ""){
+					nickname = "Unaniem - "+Date.now()
+				}
+				document.addEventListener('click',handleStart)
+				ctx.clearRect(0,0,canvas.width, canvas.height)
+
+				ctx.drawImage(cover2,0,0,w,w)
+				
+				var fontsize = 20;
+				var fontface = 'arial';
+				var lineHeight = fontsize * 1.286;
+				var text_1 = 'Getalbeeld tot 10';
+				var text_2 = 'Getalbeeld tot 20';
+
+				ctx.font = 'bold ' +fontsize + 'px ' + fontface;
+				var textWidth_1 = ctx.measureText(text_1).width*1.1;
+				var textWidth_2 = ctx.measureText(text_2).width*1.1;
+
+				ctx.textAlign = 'center';
+				ctx.textBaseline = 'top';
+				
+				ctx.globalAlpha = 0.8;
+				ctx.fillStyle = "white";
+				ctx.fillRect( 1/4*w-textWidth_1/2, w/3-lineHeight/4, textWidth_1, lineHeight);
+				ctx.fillRect( 3/4*w-textWidth_1/2, w/3-lineHeight/4, textWidth_1, lineHeight);	
+				ctx.strokeRect( 1/4*w-textWidth_1/2, w/3-lineHeight/4, textWidth_1, lineHeight);
+				ctx.strokeRect( 3/4*w-textWidth_1/2, w/3-lineHeight/4, textWidth_1, lineHeight);
+				
+				ctx.globalAlpha = 1;
+				ctx.fillStyle = "black";				
+				ctx.fillText(text_1, 1/4*w, w/3);
+				ctx.fillText(text_2, 3/4*w, w/3);
+				
+			},300)
+		}	
+		function handleStart (){
+			var rect = canvas.getBoundingClientRect();        
+    			var canvasLeft = rect.left 
+			var canvasTop = rect.top
+			var mouseX = event.clientX - canvasLeft
+			var mouseY = event.clientY - canvasTop	
+			
+			if(mouseX >= 0 && mouseX <= w/2 && mouseY >= 0 && mouseY <= (w/3+100)){
+				initialize10 ()
+			} else if (mouseX >= w/2 && mouseX <= w && mouseY >= 0 && mouseY <= (w/3+100)){
+				initialize20 ()
+			}
+		}
+		
+		function handleRestart (){
+			document.removeEventListener('click',handleRestart)
+			if (maxGetallen == 10){
+				initialize10()
+			} else {
+				initialize20()
+			}
+		
+		}
+
+	
+	</script>
+</body>
+</html>
